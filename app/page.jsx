@@ -10,7 +10,7 @@ export default function Home() {
             className="container mx-auto flex min-h-screen flex-col items-center justify-between px-12"
         >
             <Header />
-            <div className="w-full flex items-top gap-8">
+            <div className="w-full flex flex-col lg:flex-row items-top gap-8">
                 <Card />
                 <Editor />
             </div>
