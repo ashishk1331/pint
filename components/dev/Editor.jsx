@@ -1,5 +1,4 @@
 "use client";
-import { useState } from "react";
 import * as Slider from "@radix-ui/react-slider";
 import {
 	SquareLogo,
@@ -14,7 +13,7 @@ import { generateJSXMeshGradient as grad } from "meshgrad";
 
 function Control(props) {
 	const setFrameGap = useStore((state) => state.setFrameGap);
-	const setRadius = useStore(state => state.setRadius);
+	const setRadius = useStore((state) => state.setRadius);
 
 	return (
 		<label htmlFor="" className="flex flex-col items-left gap-2">
@@ -34,9 +33,8 @@ function Control(props) {
 				onValueChange={(e) => {
 					if (props.label === "Frame Gap") {
 						setFrameGap(e[0]);
-					} else if(props.label === "Round"){
-						// let radius = Math.floor(e[0] / 10)
-						setRadius(e[0])
+					} else if (props.label === "Round") {
+						setRadius(e[0]);
 					}
 				}}
 			>
@@ -53,8 +51,6 @@ function Control(props) {
 }
 
 function ShadowControl(props) {
-	// const [shadow, setShadow] = useState("lg");
-
 	const shadow = useStore((state) => state.shadow);
 	const setShadow = useStore((state) => state.setShadow);
 
@@ -89,7 +85,9 @@ export default function (props) {
 	return (
 		<div className="w-full lg:w-1/3">
 			<h3 className="scroll-m-20 text-2xl font-semibold tracking-tight mb-8 flex items-center gap-4">
-				<p className="border-b-[3px] border-primary text-primary w-fit">Edit</p>
+				<p className="border-b-[3px] border-primary text-primary w-fit">
+					Edit
+				</p>
 				<p className="text-slate-600 w-fit">Templates</p>
 			</h3>
 			<ul className="flex flex-col items-left gap-4">
@@ -101,7 +99,7 @@ export default function (props) {
 					/>
 					<p>Gradient</p>
 					<button
-						className="ml-auto bg-primary text-secondary rounded-md p-2 px-3 flex items-center gap-1"
+						className="ml-auto bg-primary text-md font-semibold text-secondary rounded-md p-2 px-3 flex items-center gap-1"
 						onClick={(e) => setGradient(grad(6))}
 					>
 						<ArrowsClockwise weight="fill" size={18} />

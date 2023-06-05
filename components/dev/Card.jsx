@@ -7,17 +7,17 @@ import { twMerge } from "tailwind-merge";
 export default function (props) {
 	const gradient = useStore((state) => state.gradient);
 	const shadow = useStore((state) => state.shadow);
-	const frameGap = useStore(state => state.frameGap)
-	const radius = useStore(state => state.radius)
+	const frameGap = useStore((state) => state.frameGap);
+	const radius = useStore((state) => state.radius);
+	const imageURI = useStore((state) => state.imageURI);
 
 	return (
 		<div
 			className="w-full aspect-video rounded-md flex p-4 bg-primary/25"
 			style={gradient}
 		>
-			
 			<Image
-				src={imageUrl}
+				src={imageURI}
 				width={420}
 				height={420}
 				priority={true}
@@ -28,10 +28,10 @@ export default function (props) {
 					shadow === "md" && "shadow-md",
 					shadow === "lg" && "shadow-lg",
 					shadow === "xl" && "shadow-xl",
-					shadow === "2xl" && "shadow-2xl",
+					shadow === "2xl" && "shadow-2xl"
 				)}
 				style={{
-					width: (100 - frameGap) + "%",
+					width: 100 - frameGap + "%",
 					borderRadius: radius + "px",
 				}}
 			/>
