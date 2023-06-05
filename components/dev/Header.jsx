@@ -15,8 +15,6 @@ export default forwardRef(function (props,ref) {
     type: "image/jpeg",
     quality: 1.0
   });
-
-
   // Function to create svg of the element 
   async function svgCreator() {
     try {
