@@ -13,10 +13,11 @@ export default async function GET(request) {
   const radius = searchParams.get("radius") || 20;
   const gradient = grad(6);
   const imageData = await image;
+  // console.log(gradient.backgroundImage)
   return new ImageResponse(
     (
       <div
-        className="w-[100%] aspect-video justify-center items-center rounded-md flex p-4 bg-primary/25"
+        className="w-[100%] aspect-video justify-center items-center rounded-md flex p-4 bg-black bg-primary/25"
         style={{
           display: "flex",
           background: "#f6f6f6",
@@ -25,12 +26,13 @@ export default async function GET(request) {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-          backgroundColor: gradient.backgroundColor,
+          backgroundColor: "#06da60",
+          backgroundImage: 'linear-gradient(to right, #800080, blue)'
         }}
       >
         <img
-          width="420"
-          height="420"
+          // width="600"
+          // height="540"
           src={imageData}
           alt="family-tree"
           className={`mx-auto rounded-md ${shadow === "sm" && "shadow-sm"} 
@@ -46,8 +48,8 @@ export default async function GET(request) {
       </div>
     ),
     {
-      width: 1200,
-      height: 630,
+      width:1600 ,
+      height:1200,
     }
   );
 }

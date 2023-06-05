@@ -11,7 +11,7 @@ export default function (props)
   const shadow = useStore((state) => state.shadow);
   const frameGap = useStore((state) => state.frameGap);
   const radius = useStore((state) => state.radius);
-//   downloader();
+  // downloader();
 // SVg Creator
   async function downloader() {
     try {
@@ -20,22 +20,26 @@ export default function (props)
           className="w-full aspect-video rounded-md flex p-4 bg-primary/25"
           style={{ display: "flex" }}
         >
-          <Image
-            src={imageUrl}
+          <img
+            src="https://picsum.photos/200/300"
             width={420}
             height={420}
             priority={true}
             alt="family tree"
-            className={twMerge("m-auto rounded-md", "sm")}
+            className={`mx-auto rounded-md ${shadow === "sm" && "shadow-sm"} 
+          ${shadow === "md" && "shadow-md"} 
+          ${shadow === "lg" && "shadow-lg"} 
+          ${shadow === "xl" && "shadow-xl"} 
+          ${shadow === "2xl" && "shadow-2xl"}`}
             style={{
-              width: 100 - 20 + "%",
-              borderRadius: 10 + "px",
+              width: "80%",
+              borderRadius: "10px",
             }}
           />
         </div>,
         { width: 600, height: 600, fonts: [] }
       );
-      console.log(svg);
+      // console.log(svg);
     } catch (error) {
       console.log(error);
     }
