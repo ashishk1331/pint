@@ -1,23 +1,24 @@
 import { Atom, DownloadSimple, ArrowClockwise } from "@phosphor-icons/react";
 import satori from "satori";
-import imageUrl from "../../images/family-tree.png";
 import Image from "next/image";
 import { useStore } from "../../lib/useStore.js";
-import { twMerge } from "tailwind-merge";
-export default function (props) {
+import { useScreenshot,createFileName } from "use-react-screenshot";
+import { forwardRef } from "react";
+export default forwardRef(function (props,ref) {
   const gradient = useStore((state) => state.gradient);
   const shadow = useStore((state) => state.shadow);
   const frameGap = useStore((state) => state.frameGap);
   const radius = useStore((state) => state.radius);
-<<<<<<< HEAD
-  // downloader();
-// SVg Creator
-=======
+  const imageURI = useStore((state) => state.imageURI);
   const setURI = useStore((state) => state.setURI);
-  //   downloader();
-  // SVg Creator
->>>>>>> main
-  async function downloader() {
+  const [image, takeScreenShot] = useScreenshot({
+    type: "image/jpeg",
+    quality: 1.0
+  });
+
+
+  // Function to create svg of the element 
+  async function svgCreator() {
     try {
       const svg = await satori(
         <div
@@ -25,7 +26,7 @@ export default function (props) {
           style={{ display: "flex" }}
         >
           <img
-            src="https://picsum.photos/200/300"
+            src={imageURI}
             width={420}
             height={420}
             priority={true}
@@ -43,12 +44,23 @@ export default function (props) {
         </div>,
         { width: 600, height: 600, fonts: [] }
       );
-      // console.log(svg);
+      console.log(svg);
     } catch (error) {
       console.log(error);
     }
   }
 
+  // function to download 
+  
+  const download = (image, { name = "img", extension = "jpg" } = {}) => {
+    const a = document.createElement("a");
+    a.href = image;
+    a.download = createFileName(extension, name);
+    a.click();
+  }; 
+  const downloadScreenshot = () => takeScreenShot(ref.current).then(download);
+
+   // function to download using OG terminology
   function triggerDownload() {
     var evt = new MouseEvent("click", {
       view: window,
@@ -59,7 +71,7 @@ export default function (props) {
     a.setAttribute("download", "Image.png");
     a.setAttribute(
       "href",
-      `http://localhost:3000/api/og?shadow=${shadow}&framegap=${frameGap}&radius=${radius}&gradient=${gradient}`
+      `http://localhost:3000/api/og?shadow=${shadow}&framegap=${frameGap}&radius=${radius}&gradient=${gradient}&imageURI=${imageURI}`
     );
     a.setAttribute("target", "_blank");
     a.dispatchEvent(evt);
@@ -84,7 +96,7 @@ export default function (props) {
         </button>
 
         <button
-          onClick={triggerDownload}
+          onClick={downloadScreenshot}
           className="text-md font-semibold bg-primary text-secondary p-2 px-4 rounded-md flex items-center gap-2"
         >
           <DownloadSimple weight="fill" className="text-secondary" size={22} />
@@ -93,4 +105,4 @@ export default function (props) {
       </div>
     </header>
   );
-}
+});

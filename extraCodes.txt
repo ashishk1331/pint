@@ -1,0 +1,56 @@
+async function svgCreator() {
+    try {
+      const svg = await satori(
+        <div
+          className="w-full aspect-video rounded-md flex p-4 bg-primary/25"
+          style={{ display: "flex" }}
+        >
+          <img
+            src={imageURI}
+            width={420}
+            height={420}
+            priority={true}
+            alt="family tree"
+            className={`mx-auto rounded-md ${shadow === "sm" && "shadow-sm"} 
+          ${shadow === "md" && "shadow-md"} 
+          ${shadow === "lg" && "shadow-lg"} 
+          ${shadow === "xl" && "shadow-xl"} 
+          ${shadow === "2xl" && "shadow-2xl"}`}
+            style={{
+              width: "80%",
+              borderRadius: "10px",
+            }}
+          />
+        </div>,
+        { width: 600, height: 600, fonts: [] }
+      );
+      console.log(svg);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  
+  const download = (image, { name = "img", extension = "jpg" } = {}) => {
+    const a = document.createElement("a");
+    a.href = imageURI;
+    a.download = createFileName(extension, name);
+    a.click();
+  }; 
+  
+  const downloadScreenshot = () => takeScreenShot(ref.current).then(download);
+
+  function triggerDownload() {
+    var evt = new MouseEvent("click", {
+      view: window,
+      bubbles: false,
+      cancelable: true,
+    });
+    var a = document.createElement("a");
+    a.setAttribute("download", "Image.png");
+    a.setAttribute(
+      "href",
+      `http://localhost:3000/api/og?shadow=${shadow}&framegap=${frameGap}&radius=${radius}&gradient=${gradient}&imageURI=${imageURI}`
+    );
+    a.setAttribute("target", "_blank");
+    a.dispatchEvent(evt);
+  }
