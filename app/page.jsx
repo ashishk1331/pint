@@ -4,6 +4,7 @@ import Footer from '../components/dev/Footer'
 import Card from '../components/dev/Card'
 import Editor from '../components/dev/Editor'
 
+
 export default function Home() {
     return (
         <main

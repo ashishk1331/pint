@@ -15,6 +15,7 @@ export default function (props) {
 			className="w-full aspect-video rounded-md flex p-4 bg-primary/25"
 			style={gradient}
 		>
+			
 			<Image
 				src={imageUrl}
 				width={420}
