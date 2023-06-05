@@ -2,7 +2,7 @@ import { Heart } from "@phosphor-icons/react";
 
 export default function (props) {
 	return (
-		<footer className="w-full flex flex-col items-center gap-2 p-2 my-8 text-white">
+		<footer className="w-full flex flex-col items-center gap-2 p-2 my-12 text-white">
 			<p className="flex items-center gap-1">
 				Crafted with
 				<Heart weight="fill" className="fill-primary" size={22} />

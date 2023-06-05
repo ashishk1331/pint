@@ -11,6 +11,12 @@
   "dependencies": {
     "@radix-ui/react-slider": "^1.1.2",
     "@radix-ui/react-slot": "^1.0.2",
+    "@uppy/core": "^3.2.0",
+    "@uppy/dashboard": "^3.4.0",
+    "@uppy/drag-drop": "^3.0.2",
+    "@uppy/file-input": "^3.0.2",
+    "@uppy/progress-bar": "^3.0.2",
+    "@uppy/react": "^3.1.2",
     "@vercel/og": "^0.5.6",
     "appwrite": "^11.0.0",
     "autoprefixer": "10.4.14",

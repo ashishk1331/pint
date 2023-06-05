@@ -29,8 +29,8 @@ export default async function GET(request) {
         }}
       >
         <img
-          width="420"
-          height="420"
+          width="1000"
+          height="1000"
           src={imageData}
           alt="family-tree"
           className={`mx-auto rounded-md ${shadow === "sm" && "shadow-sm"} 
@@ -46,8 +46,8 @@ export default async function GET(request) {
       </div>
     ),
     {
-      width: 1200,
-      height: 630,
+      width: 800,
+      height: 600,
     }
   );
 }
