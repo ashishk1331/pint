@@ -10,11 +10,12 @@ import {
 import { twMerge } from "tailwind-merge";
 import { useStore } from "../../lib/useStore.js";
 import { generateJSXMeshGradient as grad } from "meshgrad";
+import { useState } from "react";
 
 function Control(props) {
 	const setFrameGap = useStore((state) => state.setFrameGap);
 	const setRadius = useStore((state) => state.setRadius);
-
+   
 	return (
 		<label htmlFor="" className="flex flex-col items-left gap-2">
 			<div className="flex items-center gap-2">{props.children}</div>
@@ -78,56 +79,71 @@ function ShadowControl(props) {
 	);
 }
 
-export default function (props) {
+function EditorSection()
+{
 	const gradient = useStore((state) => state.gradient);
 	const setGradient = useStore((state) => state.setGradient);
+	return(<ul className="flex flex-col items-left gap-4">
+	<li className="flex items-center gap-2" key="first">
+		{/*<Square className="fill-primary" weight="fill" size={22} />*/}
+		<div
+			className="w-5 h-5 aspect-square rounded-md bg-primary/25"
+			style={gradient}
+		/>
+		<p>Gradient</p>
+		<button
+			className="ml-auto bg-primary text-md font-semibold text-secondary rounded-md p-2 px-3 flex items-center gap-1"
+			onClick={(e) => setGradient(grad(6))}
+		>
+			<ArrowsClockwise weight="fill" size={18} />
+			random
+		</button>
+	</li>
+	<li key="second">
+		<Control label="Frame Gap">
+			<SquareLogo size={22} className="text-primary" />
+			<p>Frame Gap</p>
+		</Control>
+	</li>
+	<li key="third">
+		<Control label="Angle">
+			<Compass size={22} className="text-primary" />
+			<p>Angle</p>
+		</Control>
+	</li>
+	<li key="fourth">
+		<Control label="Round">
+			<ArrowArcRight size={22} className="text-primary" />
+			<p>Roundness</p>
+		</Control>
+	</li>
+	<li className="fifth">
+		<ShadowControl />
+	</li>
+</ul>
+)
+}
 
+function GallerySection()
+{
+	return(<p>Gallery To be Implemented here</p>)
+}
+
+export default function (props) {
+	const [gallery,setGallery]=useState(false);
 	return (
 		<div className="w-full lg:w-1/3">
 			<h3 className="scroll-m-20 text-2xl font-semibold tracking-tight mb-8 flex items-center gap-4">
-				<p className="border-b-[3px] border-primary text-primary w-fit">
+				<p onClick={() =>setGallery(false)} className={` cursor-pointer  ${!gallery?"text-primary border-b-[3px] border-primary ":"text-slate-600"} w-fit`}>
 					Edit
 				</p>
-				<p className="text-slate-600 w-fit">Templates</p>
+				<p onClick={() =>setGallery(true)} className={` ${gallery?"text-primary border-b-[3px] border-primary":"text-slate-600"} w-fit cursor-pointer`}>Gallery</p>
 			</h3>
-			<ul className="flex flex-col items-left gap-4">
-				<li className="flex items-center gap-2" key="first">
-					{/*<Square className="fill-primary" weight="fill" size={22} />*/}
-					<div
-						className="w-5 h-5 aspect-square rounded-md bg-primary/25"
-						style={gradient}
-					/>
-					<p>Gradient</p>
-					<button
-						className="ml-auto bg-primary text-md font-semibold text-secondary rounded-md p-2 px-3 flex items-center gap-1"
-						onClick={(e) => setGradient(grad(6))}
-					>
-						<ArrowsClockwise weight="fill" size={18} />
-						random
-					</button>
-				</li>
-				<li key="second">
-					<Control label="Frame Gap">
-						<SquareLogo size={22} className="text-primary" />
-						<p>Frame Gap</p>
-					</Control>
-				</li>
-				<li key="third">
-					<Control label="Angle">
-						<Compass size={22} className="text-primary" />
-						<p>Angle</p>
-					</Control>
-				</li>
-				<li key="fourth">
-					<Control label="Round">
-						<ArrowArcRight size={22} className="text-primary" />
-						<p>Roundness</p>
-					</Control>
-				</li>
-				<li className="fifth">
-					<ShadowControl />
-				</li>
-			</ul>
+			<div>
+				{
+					gallery?<GallerySection />:<EditorSection />
+				}
+			</div>
 		</div>
 	);
 }
