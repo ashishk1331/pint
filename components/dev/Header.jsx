@@ -5,12 +5,16 @@ import { useStore } from "../../lib/useStore.js";
 import { useScreenshot,createFileName } from "use-react-screenshot";
 import { forwardRef, useState } from "react";
 import { Toaster, toast } from "react-hot-toast";
-import { storage,databases } from "@/appwrite/appwriteconfig.js";
+import { storage,databases,account } from "@/appwrite/appwriteconfig.js";
 import { ID } from "appwrite";
 import { variables } from "@/appwrite/variables.js";
 import { freeze } from "@/lib/freezeStore.js";
+import { useRouter } from "next/navigation";
 export default forwardRef(function (props,ref) {
+  const router=useRouter();
   const [loading,setLoading]=useState(false);
+  const user = useStore((state) => state.user);
+  const setUser = useStore((state) => state.setUser);
   const gradient = useStore((state) => state.gradient);
   const shadow = useStore((state) => state.shadow);
   const frameGap = useStore((state) => state.frameGap);
@@ -18,6 +22,7 @@ export default forwardRef(function (props,ref) {
   const imageURI = useStore((state) => state.imageURI);
   const setURI = useStore((state) => state.setURI);
   const file = useStore((state) => state.file);
+  const setFile = useStore((state) => state.setFile);
   const freezeStore= freeze((state) => state)
   const [image, takeScreenShot] = useScreenshot({
     type: "image/jpeg",
@@ -80,34 +85,70 @@ export default forwardRef(function (props,ref) {
   
   function saveEditorDetails(gradient,shadow,radius,frameGap,imageId)
 {
-    console.log("Saving Editors Info") 
-    const promise = databases.createDocument(`${variables.APPWRITE_DATABASEID}`, `${variables.APPWRITE_COLLECTIONID}`, ID.unique(), {frameGap,radius,shadow,gradient:JSON.stringify(gradient),imageId});
-    promise.then(function (response) {
-        // console.log(response); 
-        console.log("Saved Editors Info");
-        setLoading(false);
-        toast.success("Added Edit to Galley")
-    }, function (error) {
-        setLoading(false);
+    try {
+      console.log("Saving Editors Info") 
+      const promise = databases.createDocument(`${variables.APPWRITE_DATABASEID}`, `${variables.APPWRITE_COLLECTIONID}`, ID.unique(), {frameGap,radius,shadow,gradient:JSON.stringify(gradient),userId:user.id,imageId});
+      promise.then(function (response) {
+          // console.log(response); 
+          console.log("Saved Editors Info");
+          setLoading(false);
+          toast.success("Added Edit to Galley")
+      }, function (error) {
+          setLoading(false);
+          toast.error("Failed to add edit to gallery")  
+          console.log("Error Saving Editors Info",error); 
+        });
+      } catch (error) {
         toast.error("Failed to add edit to gallery")  
-        console.log("Error Saving Editors Info"); 
-    });
+       console.log(err);
+    }
+   
 }
     
   function uploadImage(freezeStore)
 {
-  setLoading(true);
-    console.log("Uploading Image")
-    const promise=storage.createFile(variables.APPWRITE_BUCKETID,ID.unique(),file);
-    promise.then(function (response) {
-        // console.log(response);
-        console.log("Image Uploaded Successfully")
-        saveEditorDetails(gradient,shadow,radius,frameGap,response.$id)
-    }, function (error) {
-      setLoading(false)
-      toast.error("Failed to add edit to gallery")  
-      console.log("Error uploading Image",error); 
-    });
+  try {
+    if(user)
+    {
+      setLoading(true);
+      console.log("Uploading Image")
+      const promise=storage.createFile(variables.APPWRITE_BUCKETID,ID.unique(),file);
+      promise.then(function (response) {
+          // console.log(response);
+          console.log("Image Uploaded Successfully")
+          saveEditorDetails(gradient,shadow,radius,frameGap,response.$id)
+      }, function (error) {
+        setLoading(false)
+        toast.error("Failed to add edit to gallery")  
+        console.log("Error uploading Image",error); 
+      });
+    }
+    else
+    {
+      router.push("/login")
+    }
+  } catch (error) {
+    toast.error("Failed to add edit to gallery")  
+    console.log(err);
+  }   
+}
+
+const handleLogout=async() =>
+{
+  if(user)
+    {
+    try{
+      const promise=await account.deleteSession("current");
+      setUser();
+      router.refresh();
+    }catch(err)
+    {
+      console.log(err)
+    }
+  }
+    else
+      console.log("No active session")
+       
 }
 
 
@@ -142,7 +183,7 @@ export default forwardRef(function (props,ref) {
       <div className="ml-auto flex justify-between items-center gap-4 mt-2 lg:mt-0 w-full lg:w-fit">
         <button
           className="text-md font-semibold bg-primary text-secondary p-2 px-4 rounded-md flex items-center gap-2"
-          onClick={(e) => setURI(null)}
+          onClick={(e) => {setURI(null);setFile(null)}}
         >
           <ArrowClockwise weight="fill" className="text-secondary" size={22} />
           Reset
@@ -155,6 +196,18 @@ export default forwardRef(function (props,ref) {
           <DownloadSimple weight="fill" className="text-secondary" size={22} />
           Download
         </button>
+        {
+          user&&(
+            <button
+          onClick={handleLogout}
+          className="text-md font-semibold bg-primary text-secondary p-2 px-4 rounded-md flex items-center gap-2"
+        >
+          <DownloadSimple weight="fill" className="text-secondary" size={22} />
+          Logout
+        </button>
+          )
+        }
+        
         <button
           disabled={(loading||imageURI==null)?true:false}
           onClick={(e)=> uploadImage(e,freezeStore)}

@@ -10,8 +10,10 @@ import {
 import { twMerge } from "tailwind-merge";
 import { useStore } from "../../lib/useStore.js";
 import { generateJSXMeshGradient as grad } from "meshgrad";
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
+import { storage } from "@/appwrite/appwriteconfig.js";
+import { variables } from "@/appwrite/variables.js";
+import Gallery from "./Gallery.jsx";
 function Control(props) {
 	const setFrameGap = useStore((state) => state.setFrameGap);
 	const setRadius = useStore((state) => state.setRadius);
@@ -124,10 +126,8 @@ function EditorSection()
 )
 }
 
-function GallerySection()
-{
-	return(<p>Gallery To be Implemented here</p>)
-}
+
+
 
 export default function (props) {
 	const [gallery,setGallery]=useState(false);
@@ -141,7 +141,7 @@ export default function (props) {
 			</h3>
 			<div>
 				{
-					gallery?<GallerySection />:<EditorSection />
+					gallery?<Gallery />:<EditorSection />
 				}
 			</div>
 		</div>
