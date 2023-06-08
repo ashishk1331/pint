@@ -1,83 +1,98 @@
-import { ID } from "appwrite";
-import { storage,databases } from "./appwriteconfig";
-import { variables } from "./variables";
+import {
+    ID
+} from "appwrite";
+import {
+    storage,
+    databases
+} from "./appwriteconfig";
+import {
+    variables
+} from "./variables";
 
-function saveEditorDetails(gradient,shadow,radius,frameGap,imageId)
-{
-   console.log("in saveEditors") 
-   console.log("gradientdetails",gradient)
-    const promise = databases.createDocument(`${variables.APPWRITE_DATABASEID}`, `${variables.APPWRITE_COLLECTIONID}`, ID.unique(), {frameGap,radius,shadow,gradient:JSON.stringify(gradient),imageId});
-    promise.then(function (response) {
-        console.log(response); 
-    }, function (error) {
-        console.log(error); 
+function saveEditorDetails(gradient, shadow, radius, frameGap, imageId) {
+    console.log("in saveEditors")
+    console.log("gradientdetails", gradient)
+    const promise = databases.createDocument(`${variables.APPWRITE_DATABASEID}`, `${variables.APPWRITE_COLLECTIONID}`, ID.unique(), {
+        frameGap,
+        radius,
+        shadow,
+        gradient: JSON.stringify(gradient),
+        imageId
+    });
+    promise.then(function(response) {
+        console.log(response);
+    }, function(error) {
+        console.log(error);
     });
 }
 
-function uploadImage(freezeStore)
-{
+function uploadImage(freezeStore) {
     console.log("hii")
     console.log(document.getElementById('fileUpload'))
-    const promise=storage.createFile(variables.APPWRITE_BUCKETID,ID.unique(),document.getElementById("fileUpload").files[0]);
-    promise.then(function (response) {
+    const promise = storage.createFile(variables.APPWRITE_BUCKETID, ID.unique(), document.getElementById("fileUpload").files[0]);
+    promise.then(function(response) {
         console.log(response);
-        const x={...freezeStore,imageURI:""}
-        console.log(x) 
-    }, function (error) {
-        console.log(error); 
+        const x = { ...freezeStore,
+            imageURI: ""
+        }
+        console.log(x)
+    }, function(error) {
+        console.log(error);
     });
 }
 
-function listImages()
-{
+function listImages() {
     const promise = storage.listFiles(`${variables.APPWRITE_BUCKETID}`);
-    promise.then(function (response) {
-        console.log(response); 
-    }, function (error) {
-        console.log(error); 
+    promise.then(function(response) {
+        console.log(response);
+    }, function(error) {
+        console.log(error);
     });
 }
 
-function getImage(fileId)
-{
+function getImage(fileId) {
     const promise = storage.getFile(`${variables.APPWRITE_BUCKETID}`, `${fileId}`);
-    promise.then(function (response) {
-        console.log(response); 
-    }, function (error) {
-        console.log(error); 
+    promise.then(function(response) {
+        console.log(response);
+    }, function(error) {
+        console.log(error);
     });
 }
 
-function previewImage(fileId)
-{
+function previewImage(fileId) {
     const result = storage.getFilePreview(`${variables.APPWRITE_BUCKETID}`, `${fileId}`);
     console.log(result); // Resource URL
 }
 
-function downloadImage(fileId)
-{
+function downloadImage(fileId) {
     const result = storage.getFilePreview(`${variables.APPWRITE_BUCKETID}`, `${fileId}`);
     console.log(result); // Resource URL
 }
 
-function updateImage(fileId)
-{
+function updateImage(fileId) {
     const promise = storage.updateFile(`${variables.APPWRITE_BUCKETID}`, `${fileId}`);
-    promise.then(function (response) {
+    promise.then(function(response) {
         console.log(response); // Success
-    }, function (error) {
+    }, function(error) {
         console.log(error); // Failure
     });
 }
 
-function deleteImage()
-{
+function deleteImage() {
     const promise = storage.deleteFile(`${variables.APPWRITE_BUCKETID}`, `${fileId}`);
-    promise.then(function (response) {
+    promise.then(function(response) {
         console.log(response); // Success
-    }, function (error) {
+    }, function(error) {
         console.log(error); // Failure
     });
 }
-
-module.exports={saveEditorDetails,uploadImage,listImages,getImage,previewImage,downloadImage,updateImage,deleteImage};
+module.exports = {
+    saveEditorDetails,
+    uploadImage,
+    listImages,
+    getImage,
+    previewImage,
+    downloadImage,
+    updateImage,
+    deleteImage
+};
