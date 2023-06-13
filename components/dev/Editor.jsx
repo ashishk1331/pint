@@ -134,7 +134,7 @@ export default function (props) {
 	return (
 		<div className="w-full lg:w-1/3">
 			<h3 className="scroll-m-20 text-2xl font-semibold tracking-tight mb-8 flex items-center gap-4">
-				<p onClick={() =>setGallery(false)} className={` cursor-pointer  ${!gallery?"text-primary border-b-[3px] border-primary ":"text-slate-600"} w-fit`}>
+				<p onClick={() =>setGallery(false)} className={` cursor-pointer  ${!openGallery?"text-primary border-b-[3px] border-primary ":"text-slate-600"} w-fit`}>
 					Edit
 				</p>
 				<p onClick={() =>setGallery(true)} className={` ${openGallery?"text-primary border-b-[3px] border-primary":"text-slate-600"} w-fit cursor-pointer`}>Gallery({gallery.length})</p>

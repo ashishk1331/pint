@@ -11,7 +11,7 @@ export default function (props) {
 	const setFile=useStore((state) => state.setFile )
 	const freezeStore=freeze((state) => state)
 	return (
-		<div className="w-full aspect-video rounded-md flex p-4 bg-primary/25">
+		<div className="w-full aspect-video flex p-4 bg-primary/25">
 			<label
 				className="m-auto bg-secondary p-6 lg:p-12 rounded-md flex items-center flex-col gap-3 cursor-pointer"
 				htmlFor="fileUpload"

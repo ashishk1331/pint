@@ -12,7 +12,7 @@ export default forwardRef(function Card(props, ref) {
   const imageURI = useStore((state) => state.imageURI);
   return (
     <div
-      className="w-full relative aspect-video rounded-md flex p-4 bg-primary/25"
+      className="w-full relative aspect-video flex p-4 bg-primary/25"
       style={gradient}
       ref={ref}
     >
