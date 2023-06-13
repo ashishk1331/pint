@@ -2,7 +2,7 @@
 import { useContext, useEffect, useState } from "react";
 import Image from "next/image";
 import { Eye, Atom } from "phosphor-react";
-import Loader from "@/components/dev/loader";
+import Loaders from "@/components/dev/Loaders";
 import { verifyEmail, verifyPassword } from "@/helper/helper";
 import { Toaster, toast } from "react-hot-toast";
 import { account } from "@/appwrite/appwriteconfig";
@@ -174,7 +174,7 @@ export default function login() {
               </button>
             )
           ) : (
-            <Loader />
+            <Loaders />
           )}
         </div>
         <div className="mt-5">

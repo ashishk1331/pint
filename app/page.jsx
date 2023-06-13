@@ -6,7 +6,7 @@ import Upload from '../components/dev/Upload'
 import Editor from '../components/dev/Editor'
 import { useStore } from "../lib/useStore.js";
 import { useRef } from 'react';
-import Loader from "../components/dev/Loader"
+import Loaders from "../components/dev/Loaders"
 export default function Home() { 
     const ref=useRef(null);
     const imageURI = useStore(state => state.imageURI)
@@ -16,7 +16,7 @@ export default function Home() {
         <main
             className="container mx-auto flex min-h-screen flex-col items-center justify-center px-12">
             {
-                globalLoading?<div className='flex flex-col gap-1 justify-center items-center text-center'><Loader /><p>Setting up your dashboard..</p></div>:(
+                globalLoading?<div className='flex flex-col gap-1 justify-center items-center text-center'><Loaders /><p>Setting up your dashboard..</p></div>:(
                 <>
                    <Header ref={ref}  />
                    <div className="w-full  flex flex-col lg:flex-row mt-6 lg:mt-0 items-top gap-16 lg:gap-8">
