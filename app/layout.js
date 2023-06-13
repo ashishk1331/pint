@@ -9,10 +9,7 @@ import { Query } from "appwrite";
 const inter = Inter({
   subsets: ["latin"],
 });
-export const metadata = {
-  title: "Pint",
-  description: "Image generation tool built using nextjs and appwrite",
-};
+
 export default function RootLayout({ children }) {
   const user = useStore((state) => state.user);
   const setUser = useStore((state) => state.setUser);
@@ -64,6 +61,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <head>
         <link rel="icon" href="/pint.png" />
+        <title>Pint</title>
       </head>
       <body className={inter.className + " bg-secondary text-white"}>
         {children}
