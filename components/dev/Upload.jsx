@@ -23,6 +23,7 @@ export default function (props) {
 					id="fileUpload"
 					className="m-auto"
 					type="file"
+					accept="image/*"
 					name="file"
 					onChange={(e) => {
 						e.preventDefault();

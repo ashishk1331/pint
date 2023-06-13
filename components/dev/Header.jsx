@@ -181,7 +181,7 @@ export default forwardRef(function (props, ref) {
         Pint
       </h1>
 
-      <div className="ml-auto flex flex-col md:flex-row flex-wrap justify-between items-center gap-4 mt-2 lg:mt-0 w-full lg:w-fit">
+      <div className="ml-auto flex  flex-wrap justify-center items-center gap-4 mt-2 lg:mt-0 w-full lg:w-fit">
         <button
           className="text-md font-semibold bg-primary text-secondary p-2 px-4 rounded-md flex items-center gap-2"
           onClick={(e) => {
@@ -219,7 +219,7 @@ export default forwardRef(function (props, ref) {
           onClick={(e) => uploadImage(e, freezeStore)}
           className={`text-md font-semibold ${
             loading || imageURI == null
-              ? "bg-gray-200 opacity-30"
+              ? "bg-gray-200 opacity-80"
               : "bg-primary"
           } text-secondary p-2 px-4 rounded-md flex items-center gap-2`}
         >

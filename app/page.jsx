@@ -19,7 +19,7 @@ export default function Home() {
                 globalLoading?<div className='flex flex-col gap-1 justify-center items-center text-center'><Loader /><p>Setting up your dashboard..</p></div>:(
                 <>
                    <Header ref={ref}  />
-                   <div className="w-full  flex flex-col lg:flex-row mt-16 lg:mt-0 items-top gap-16 lg:gap-8">
+                   <div className="w-full  flex flex-col lg:flex-row mt-6 lg:mt-0 items-top gap-16 lg:gap-8">
                     {
                         imageURI ?
                         <Card ref={ref} />
