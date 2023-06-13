@@ -60,8 +60,8 @@ export default function login() {
     try {
       const promise = account.createOAuth2Session(
         "github",
-        window.location.href,
-        window.location.href + "/login"
+        "http://localhost:3001/",
+        window.location.href 
       );
       promise.then(
         function (response) {

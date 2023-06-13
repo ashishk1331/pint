@@ -11,6 +11,7 @@ import { DownloadSimple,X } from "phosphor-react";
 function Card({id, gradient, imageURI, shadow, frameGap, radius }) {
   const gallery = useStore((state) => state.gallery);
   const setGallery = useStore((state) => state.setGallery);
+  const filterGallery = useStore((state) => state.filterGallery);
     const router=useRouter();
     return (
         <div
@@ -36,21 +37,20 @@ function Card({id, gradient, imageURI, shadow, frameGap, radius }) {
                     borderRadius: radius + "px",
                 }}
             />
-            {/* <div className="w-full  gap-5 group-hover:flex hidden justify-center items-center  trasition transform duration-300 bg-black bg-opacity-70 h-full absolute top-0 left-0">
-            <DownloadSimple className="border-2 cursor-pointer border-gray-300 rounded-md p-1" size={42} fill="#ffffff" weight="bold" />
-            <X size={42} onClick={() =>{      
+            <div className="w-full  gap-5 group-hover:flex hidden justify-center items-center  trasition transform duration-300 bg-black bg-opacity-70 h-full absolute top-0 left-0">
+            {/* <DownloadSimple onClick={()=>{
+                 const x=imageURI.pathname;
+                 const val=x.slice(x.indexOf("files")+6,x.indexOf("preview")-1)
+                 const result = storage.getFilePreview(variables.APPWRITE_BUCKETID, );
+                 console.log(result); // Resource URL
+            }} className="border-2 cursor-pointer border-gray-300 rounded-md p-1" size={42} fill="#ffffff" weight="bold" /> */}
+            
+            <X  size={42} onClick={() =>{      
                 const promise1 = databases.deleteDocument(variables.APPWRITE_DATABASEID, variables.APPWRITE_COLLECTIONID, id);
                 promise1.then(function (response) {
-                    const y=gallery.filter(item => item.id!=id)
-                    console.log(typeof(gallery))
-                    console.log(typeof(y))
-                    for (let z in gallery)
-                    {
-                        console.log(gallery)
-                    }
-                    setGallery({y})
                     const x=imageURI.pathname;
                     const val=x.slice(x.indexOf("files")+6,x.indexOf("preview")-1)
+                    filterGallery(id)
                     const promise = storage.deleteFile(variables.APPWRITE_BUCKETID, val);
                     router.refresh();
                 }, function (error) {
@@ -59,7 +59,7 @@ function Card({id, gradient, imageURI, shadow, frameGap, radius }) {
                 
             }} className="border-2 cursor-pointer border-gray-300 rounded-md p-1" fill="#ffffff" weight="bold" />
 
-            </div> */}
+            </div>
         </div>
     );
 }

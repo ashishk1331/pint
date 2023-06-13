@@ -30,6 +30,7 @@ export default forwardRef(function (props, ref) {
   const freezeStore = freeze((state) => state);
   const setGallery = useStore((state) => state.setGallery);
   const gallery = useStore((state) => state.gallery);
+  const deleteGallery = useStore((state) => state.deleteGallery);
   const [image, takeScreenShot] = useScreenshot({
     type: "image/jpeg",
     quality: 1.0,
@@ -159,8 +160,9 @@ export default forwardRef(function (props, ref) {
         promise.then(
           () => {
             setUser();
+            deleteGallery()
             toast.loading("Logging Out...", { duration: 1000 });
-            router.refresh();
+            router.push("/");
           },
           (err) => {
             toast.error("failed to logout...");
