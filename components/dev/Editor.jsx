@@ -11,8 +11,7 @@ import { twMerge } from "tailwind-merge";
 import { useStore } from "../../lib/useStore.js";
 import { generateJSXMeshGradient as grad } from "meshgrad";
 import { useEffect, useState } from "react";
-import { storage } from "@/appwrite/appwriteconfig.js";
-import { variables } from "@/appwrite/variables.js";
+
 import Gallery from "./Gallery.jsx";
 function Control(props) {
 	const setFrameGap = useStore((state) => state.setFrameGap);
@@ -130,18 +129,19 @@ function EditorSection()
 
 
 export default function (props) {
-	const [gallery,setGallery]=useState(false);
+	const [openGallery,setGallery]=useState(false);
+	const gallery = useStore((state) => state.gallery);
 	return (
 		<div className="w-full lg:w-1/3">
 			<h3 className="scroll-m-20 text-2xl font-semibold tracking-tight mb-8 flex items-center gap-4">
 				<p onClick={() =>setGallery(false)} className={` cursor-pointer  ${!gallery?"text-primary border-b-[3px] border-primary ":"text-slate-600"} w-fit`}>
 					Edit
 				</p>
-				<p onClick={() =>setGallery(true)} className={` ${gallery?"text-primary border-b-[3px] border-primary":"text-slate-600"} w-fit cursor-pointer`}>Gallery</p>
+				<p onClick={() =>setGallery(true)} className={` ${openGallery?"text-primary border-b-[3px] border-primary":"text-slate-600"} w-fit cursor-pointer`}>Gallery({gallery.length})</p>
 			</h3>
 			<div>
 				{
-					gallery?<Gallery />:<EditorSection />
+					openGallery?<Gallery />:<EditorSection />
 				}
 			</div>
 		</div>

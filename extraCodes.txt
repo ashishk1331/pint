@@ -54,3 +54,21 @@ async function svgCreator() {
     a.setAttribute("target", "_blank");
     a.dispatchEvent(evt);
   }
+
+
+    // function to download using OG terminology
+    function triggerOGDownload() {
+        var evt = new MouseEvent("click", {
+            view: window,
+            bubbles: false,
+            cancelable: true,
+        });
+        var a = document.createElement("a");
+        a.setAttribute("download", "Image.png");
+        a.setAttribute(
+            "href",
+            `http://localhost:3000/api/og?shadow=${shadow}&framegap=${frameGap}&radius=${radius}&gradient=${gradient}&imageURI=${imageURI}`
+        );
+        a.setAttribute("target", "_blank");
+        a.dispatchEvent(evt);
+    }
